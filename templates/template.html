@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ id }}</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+        body {
+            font-family: "Times New Roman", serif;
+            line-height: 1.5;
+            font-size: 12pt;
+        }
+        .header {
+            text-align: right;
+            margin-bottom: 3cm;
+        }
+        .header > p {
+            margin: .2cm 0;
+        }
+        .title {
+            text-align: center;
+            font-weight: bold;
+            font-size: 13pt;
+            margin-bottom: .2cm;
+        }
+        .content {
+            text-indent: 1.25cm;
+            margin-bottom: 1cm;
+            text-align: justify;
+        }
+        table {
+            width: 100%;
+            margin-top: .5cm;
+            border-collapse: collapse;
+        }
+        th {
+            text-align: center;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 3px;
+        }
+        .signature {
+            margin-top: 1.5cm;
+            display: flex;
+            justify-content: space-between;
+        }
+        .stamp {
+            text-align: center;
+            margin-top: 1cm;
+            font-style: italic;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        	text-align: center;
+        }
+        .footer > p {
+        	margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <p>Кому: {{ recipient_name }}</p>
+        <p>{{ recipient_contact }}</p>
+        <p>От: {{ sender_name }}</p>
+        <p>{{ sender_contact }}</p>
+    </div>
+    <div class="title">
+        {{ title }} №{{ id }}
+    </div>
+    <div class="content">
+        {{ report_content | capitalize }}
+        <table>
+            <thead>
+                {% for column in table["table_head"] %}
+                    <th>{{ column }}</th>
+                {% endfor %}
+            </thead>
+            <tbody>
+                {% for row in table["table_rows"] %}
+                    <tr>
+                        {% for data in row %}
+                            <td>{{ data }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="signature">
+        <div>Дата: {{ current_date }}</div>
+        <div>_________________ / {{ sender_name }}</div>
+    </div>
+     <div class="footer">
+        <p>{{ city | capitalize }}</p>
+        <p>{{ current_year }}</p>
+    </div>
+</body>
+</html>
