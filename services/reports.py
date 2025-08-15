@@ -35,6 +35,7 @@ class ReportsService:
             return target
         except Exception as err:
             log.exception(f"PDF file saving failed: {err}")
+            raise HTTPException(status_code=500, detail="Internal server error")
 
     def generate_pdf_report(self, report_data: dict ) -> bytes:
         try:
